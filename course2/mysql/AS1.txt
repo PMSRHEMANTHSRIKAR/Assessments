@@ -1,0 +1,13 @@
+Q1)select customerid from customerinteractions where (DataUsed > '2.43') and ( month="march" and year =2024 );
+Q2)
+Q3)
+Q4) select producttypeid, sum(totalsalesamount) from quarterlysales where producttypeid=1 group  by producttypeid;
+Q5)select producttypeid , sum(TotalSalesAmount) from quarterlysales where quarter ="q1" group by  producttypeid desc limit 1;
+Q6)select (totalsalesamount/unitssold) from quarterlysales where ProductTypeID= 1 and quarter = "q2";
+Q7)
+Q8)
+Q9)
+Q10)select customername from insuranceactivities where feedbackscore>7 or investigation="no";
+Q11)select sum(annualpremium ) from insuranceactivities where claimscount>=1 and FeedbackScore>7;
+
+Q12)
