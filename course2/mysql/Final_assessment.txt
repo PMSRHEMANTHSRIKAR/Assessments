@@ -1,0 +1,67 @@
+-- Q1
+select product_category,avg(sales_amount) from customers join sales_records using(customer_id) join products using(product_id) 
+group by product_category ;
+
+-- Q2
+select product_id, sum(sales_amount) as sa from sales_records group by product_id order by sa desc limit 3; 
+
+-- Q3
+select customer_id, sum(sales_amount) , rank() over(order by sum(sales_amount) desc)  from sales_records group by customer_id ;
+
+-- Q4
+select customer_id , 
+case
+when count(customer_id) >=4 then 'consistent buyers'
+else 'occasional buyers'
+end as buyers
+from sales_records
+group by customer_id;
+
+-- Q5
+select flight_id, round(avg(ticket_price),0) from flights join tickets using(flight_id) group by flight_id;
+
+-- Q6
+select flight_number, departure_date,count(ticket_id) as tickets_sales from flights join tickets using(flight_id) group by flight_id order by tickets_sales desc; 
+
+-- Q7
+ select passenger_name, sum(ticket_price) as total_sales,frequent_flyer_status  from passengers join tickets using(passenger_id) group by passenger_id order by total_sales desc limit 5;
+ 
+ -- Q8
+select extract(month from ticket_date) as month,count(month(ticket_date)) as tickets_sold from tickets group by  month order by  month  limit 1;
+
+-- Q9
+select avg(score) , game_genre from playerscores join games using(game_id) group by game_genre;
+
+-- Q10
+select game_id,game_name, count(player_id) as count_players from playerscores join games using(game_id) group by game_id;
+
+-- Q11
+select game_id,count(player_id) as count_players, avg(score), max(score) from playerscores group by game_id;
+
+-- Q12
+select player_name, registration_date,play_date from players join playerscores using(player_id) where datediff(current_date(),play_date)>30;
+
+-- Q13
+select doctor_name, max(cost) as max_cost from treatments join doctors using(doctor_id) group by doctor_name order by max_cost desc limit 5;
+
+-- Q14
+select treatment_name, sum(cost), percent_rank() over(order by sum(cost)) from treatments group by treatment_name;
+
+-- Q15
+select patient_id,count(patient_id), patient_name, admission_date, discharge_date from patients group by patient_id having count(patient_id)>1 order by admission_date;
+
+-- Q16
+select round(avg(datediff(discharge_date,admission_date)),0) as los, gender, diagnosis from patients group by gender,diagnosis;
+
+-- Q17
+select department, semester,avg(grade) from courses join enrollments using(course_id) group by department,semester;\
+
+-- Q18
+select major, count(major)as students_enrolled,enrollment_year from students group by major,enrollment_year;
+
+-- Q19
+select  student_name,semester, sum(credits) from students join enrollments using(student_id) join courses using(course_id) group by student_name,semester having sum(credits)>50;
+
+
+-- Q20 
+select courses, count(courses)as students_enrolled,enrollment_year from students join enrollments using(student_id) join courses using(course_id) group by major,enrollment_year;
